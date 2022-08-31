@@ -87,6 +87,7 @@
         <file path="mss/mss_mrr_cli.c" openOnCreation="false" excludeFromBuild="false" action="copy"/>
         <file path="common/cfg.c" targetDirectory="common" openOnCreation="false" excludeFromBuild="false" action="copy" />  
         <file path="common/mmw_messages.h" targetDirectory="common" openOnCreation="false" excludeFromBuild="false" action="copy" /> 
+        <file path="common/mrr_config_chrip_design_dynamic.h" targetDirectory="common" openOnCreation="false" excludeFromBuild="false" action="copy" />
         <file path="common/mrr_config_chirp_design_MRR80.h" targetDirectory="common" openOnCreation="false" excludeFromBuild="false" action="copy" />
         <file path="common/mrr_config_chirp_design_MRR120.h" targetDirectory="common" openOnCreation="false" excludeFromBuild="false" action="copy" />
         <file path="common/mrr_config_chirp_design_USRR20.h" targetDirectory="common" openOnCreation="false" excludeFromBuild="false" action="copy" />

@@ -164,6 +164,9 @@
 /*! @brief Add in the USRR 30 chirp design. */
 #include "mrr_config_chirp_design_USRR30.h"
 
+/*! @brief Add in the dynamic chirp design. */
+#include "mrr_config_chirp_design_dynamic.h"
+
 #if NUM_SUBFRAMES == 2
     #ifdef SUBFRAME_CONF_MRR_USRR
         #define FRAME_PERIODICITY_VAL (SUBFRAME_MRR_PERIODICITY_VAL + SUBFRAME_USRR_PERIODICITY_VAL)

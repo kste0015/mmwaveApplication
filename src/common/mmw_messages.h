@@ -77,7 +77,8 @@ typedef enum MmwDemo_message_type_e
     MMWDEMO_DSS2MSS_STOPDONE,
     MMWDEMO_DSS2MSS_ASSERT_INFO,
     MMWDEMO_DSS2MSS_ISR_INFO_ADDRESS,
-    MMWDEMO_DSS2MSS_MEASUREMENT_INFO
+    MMWDEMO_DSS2MSS_MEASUREMENT_INFO,
+    MMWDEMO_DSS2MSS_COMM_INFO
 
 }MmwDemo_message_type;
 
@@ -175,6 +176,9 @@ typedef union MmwDemo_message_body_u
     uint8_t               dataLogger;
     /*! @brief   DSS assertion information */
     MmwDemo_dssAssertInfoMsg  assertInfo;
+
+    /*! @brief   Transmitted information */
+    char  commInfo[512];
     
     /*! @brief Address of DSS to MSS ISR information storage, typically in HSRAM */
     uint32_t  dss2mssISRinfoAddress;
