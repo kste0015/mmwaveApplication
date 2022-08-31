@@ -265,7 +265,7 @@ static int32_t MRR_MSS_CLIBasicCfg (int32_t argc, char* argv[])
     /********************************************************************************
      * Frame configuration:
      ********************************************************************************/
-    Cfg_FrameCfgInitParams (&frameCfg);
+    Cfg_FrameCfgInitParams (0U, &frameCfg);
     retVal = rlSetFrameConfig(RL_DEVICE_MAP_INTERNAL_BSS, &frameCfg);
     if (retVal != RL_RET_CODE_OK)
     {
@@ -461,7 +461,7 @@ static int32_t MRR_MSS_CLICustomFrameCfg (int32_t argc, char* argv[])
     /********************************************************************************
      * Frame configuration:
      ********************************************************************************/
-    Cfg_FrameCfgInitParams (&frameCfg, 1U);
+    Cfg_FrameCfgInitParams (1U, &frameCfg);
     retVal = rlSetFrameConfig(RL_DEVICE_MAP_INTERNAL_BSS, &frameCfg);
     if (retVal != RL_RET_CODE_OK)
     {

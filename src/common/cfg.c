@@ -172,20 +172,33 @@ void Cfg_AdvFrameCfgInitParams (rlAdvFrameCfg_t* ptrAdvFrameCfg)
  *  @retval
  *      Not applicable
  */
-void Cfg_FrameCfgInitParams (rlFrameCfg_t* ptrFrameCfg)
+void Cfg_FrameCfgInitParams (uint8_t frameNum, rlFrameCfg_t* ptrFrameCfg)
 {
     /* Initialize the configuration: */
     memset ((void*)ptrFrameCfg, 0, sizeof(rlFrameCfg_t));
-
-    /* Populate the default configuration: */
-    ptrFrameCfg->chirpEndIdx        = FRAME_CHIRP_END_IDX;
-    ptrFrameCfg->chirpStartIdx      = FRAME_CHIRP_START_IDX;
-    ptrFrameCfg->numFrames          = FRAME_COUNT_VAL;
-    ptrFrameCfg->numLoops           = FRAME_LOOP_COUNT;
-    ptrFrameCfg->triggerSelect      = RL_FRAMESTRT_SYNCIN_TRIGGER;
-    ptrFrameCfg->framePeriodicity   = FRAME_PERIODICITY_VAL;
-    ptrFrameCfg->frameTriggerDelay  = FRAME_TRIGGER_DELAY_VAL;
-    ptrFrameCfg->numAdcSamples      = FRAME_NUM_REAL_ADC_SAMPLES;
+    
+    if (frameNum == 0U) {
+        /* Populate the default configuration: */
+        ptrFrameCfg->chirpEndIdx        = FRAME_CHIRP_END_IDX;
+        ptrFrameCfg->chirpStartIdx      = FRAME_CHIRP_START_IDX;
+        ptrFrameCfg->numFrames          = FRAME_COUNT_VAL;
+        ptrFrameCfg->numLoops           = FRAME_LOOP_COUNT;
+        ptrFrameCfg->triggerSelect      = RL_FRAMESTRT_SYNCIN_TRIGGER;
+        ptrFrameCfg->framePeriodicity   = FRAME_PERIODICITY_VAL;
+        ptrFrameCfg->frameTriggerDelay  = FRAME_TRIGGER_DELAY_VAL;
+        ptrFrameCfg->numAdcSamples      = FRAME_NUM_REAL_ADC_SAMPLES;
+    } else {
+        /* Populate the dynamic configuration: */
+        ptrFrameCfg->chirpEndIdx        = DYNAMIC_FRAME_CHIRP_END_IDX;
+        ptrFrameCfg->chirpStartIdx      = DYNAMIC_FRAME_CHIRP_START_IDX;
+        ptrFrameCfg->numFrames          = DYNAMIC_FRAME_COUNT_VAL;
+        ptrFrameCfg->numLoops           = DYNAMIC_FRAME_LOOP_COUNT;
+        ptrFrameCfg->triggerSelect      = RL_FRAMESTRT_SYNCIN_TRIGGER;
+        ptrFrameCfg->framePeriodicity   = DYNAMIC_FRAME_PERIODICITY_VAL;
+        ptrFrameCfg->frameTriggerDelay  = DYNAMIC_FRAME_TRIGGER_DELAY_VAL;
+        ptrFrameCfg->numAdcSamples      = DYNAMIC_FRAME_NUM_REAL_ADC_SAMPLES;
+    }
+    
     return;
 }
 

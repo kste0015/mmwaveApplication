@@ -259,6 +259,15 @@
 #define FRAME_TRIGGER_DELAY_VAL         (0U)
 #define FRAME_NUM_REAL_ADC_SAMPLES      (512U)
 #define FRAME_NUM_CMPLX_ADC_SAMPLES     (256U)
+
+#define DYNAMIC_FRAME_CHIRP_START_IDX           (0U)
+#define DYNAMIC_FRAME_CHIRP_END_IDX             (511U)
+#define DYNAMIC_FRAME_COUNT_VAL                 (0U)
+#define DYNAMIC_FRAME_LOOP_COUNT                (1U)
+#define DYNAMIC_FRAME_TRIGGER_DELAY_VAL         (0U)
+#define DYNAMIC_FRAME_NUM_REAL_ADC_SAMPLES      (512U)
+#define DYNAMIC_FRAME_NUM_CMPLX_ADC_SAMPLES     (256U)
+#define DYNAMIC_FRAME_PERIODICITY_VAL           (40000000U) // 200ms
 /*! @} */
 
 /*! @brief There are two TPCCs available on the 16xx.  @{ */
