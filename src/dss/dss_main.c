@@ -166,6 +166,8 @@ static int32_t MRR_DSS_SendProcessOutputToMSS(uint8_t *ptrHsmBuffer,
                                                  uint32_t outputBufSize,
                                                  MmwDemo_DSS_DataPathObj *obj);
 static void MRR_DSS_DataPathOutputLogging(MmwDemo_DSS_DataPathObj * dataPathObj);
+static void MRR_DSS_SendMessageOutputToMSS(char* decodedMessage);
+static void MRR_DSS_DecodedMessageOutputLogging(char* decodedMessage);
 static void MmwDemo_mboxReadProc();
 void MmwDemo_mboxCallback(Mbox_Handle handle, Mailbox_Type peer);
 
@@ -284,7 +286,8 @@ static void MRR_DSS_mmWaveTask(UArg arg0, UArg arg1)
                 gCycleLog.interFrameWaitTime = 0;
 
                 /* Sending detected objects to logging buffer */
-                MRR_DSS_DataPathOutputLogging(dataPathObj);
+                // MRR_DSS_DataPathOutputLogging(dataPathObj);
+                MRR_DSS_DecodedMessageOutputLogging(dataPathObj->message)
                 dataPathObj->timingInfo.interFrameProcessingEndTime = Cycleprofiler_getTimeStamp();
 
                 /* Update the subframeIndx */
@@ -1067,6 +1070,91 @@ void MRR_DSS_DataPathOutputLogging(MmwDemo_DSS_DataPathObj * dataPathObj)
          logging buffer is ready */
         if (MRR_DSS_SendProcessOutputToMSS((uint8_t *) &gHSRAM, (uint32_t) SOC_XWR18XX_DSS_HSRAM_SIZE,
                                             dataPathObj) < 0)
+        {
+            /* Increment logging error */
+            MmwDemo_dssAssert(0);
+            gMrrDSSMCB.stats.detObjLoggingErr++;
+        }
+        
+    }
+    else
+    {
+        /* Logging buffer is not available, skip saving detected objectes to logging buffer */
+        gMrrDSSMCB.stats.detObjLoggingSkip++;
+    }
+}
+
+/**
+ *  @b Description
+ *  @n
+ *      Function to send decoded message to MSS logger.
+ *
+ *  @param[in]  ptrOutputBuffer
+ *      Pointer to the output buffer
+ *  @param[in]  outputBufSize
+ *      Size of the output buffer
+ *  @param[in]  obj
+ *      Handle to the Data Path Object
+ *
+ *  @retval
+ *      =0    Success
+ *      <0    Failed
+ */
+int32_t MRR_DSS_SendMessageOutputToMSS(char* decodedMessage)
+{
+    MmwDemo_message message;
+
+    /* Clear message to MSS */
+    memset((void *) &message, 0, sizeof(MmwDemo_message));
+    message.type = MMWDEMO_DSS2MSS_COMM_INFO;
+
+    strcpy(message.body.commInfo, decodedMessage);
+
+    if (MmwDemo_mboxWrite(&message) != 0)
+    {
+        System_printf("Error: mboxWrite can't write message retVal=%d\n", -1);
+        return -1;
+    }
+    return 0;
+}
+
+/**
+ *  @b Description
+ *  @n
+ *      Function to send decoded message output.
+ *
+ *  @retval
+ *      Not Applicable.
+ */
+void MRR_DSS_DecodedMessageOutputLogging(char * decodedMessage)
+{
+    volatile int32_t waitCounter = 0;
+    /* if the logging buffer is not available, wait a little for the transfer message to come from 
+     * the MSS. */
+    if(gMrrDSSMCB.loggingBufferAvailable == 0) 
+    {
+        while((waitCounter < 6000000) && (gMrrDSSMCB.loggingBufferAvailable == 0))
+        {
+            waitCounter++;
+            
+            if (gMrrDSSMCB.mboxProcToken == 1) 
+            {
+                gMrrDSSMCB.mboxProcToken = 0;
+                /* If the mailbox has a message and the frame processing task has finished. */
+                MmwDemo_mboxReadProc();
+            }
+        }
+    }
+    
+    /* Sending detected objects to logging buffer and shipped out from MSS UART */
+    if (gMrrDSSMCB.loggingBufferAvailable == 1)
+    {
+        /* Set the logging buffer available flag to be 0 */
+        gMrrDSSMCB.loggingBufferAvailable = 0;
+
+        /* Save output in logging buffer - HSRAM memory and a message is sent to MSS to notify
+         logging buffer is ready */
+        if (MRR_DSS_SendMessageOutputToMSS(decodedMessage) < 0)
         {
             /* Increment logging error */
             MmwDemo_dssAssert(0);
