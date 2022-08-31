@@ -382,28 +382,29 @@ static int32_t Cfg_DynChirpCfgSetParams (char* message)
     rlDynChirpCfg_t dynChirpCfg[12];
     uint8_t i,j;
     uint16_t iter = 0;
+    int32_t retVal;
     
     for (i = 0; i < 10; i++) {
         dynChirpCfg[i].chirpRowSelect = 0x20;
-        dynChirpCfg[i].chirpSegSelect = i*3;
+        dynChirpCfg[i].chirpSegSel = i*3;
         dynChirpCfg[i].programMode = 0;
         for (j = 0; j < 16; j++) {
             if (iter < length) {
-                dynChirpCfg[i].chirpRow[j].chirpNR1 = message[iter]
+                dynChirpCfg[i].chirpRow[j].chirpNR1 = message[iter];
             } else {
                 dynChirpCfg[i].chirpRow[j].chirpNR1 = 0U;
             }
             iter++;
 
             if (iter < length) {
-                dynChirpCfg[i].chirpRow[j].chirpNR2 = message[iter]
+                dynChirpCfg[i].chirpRow[j].chirpNR2 = message[iter];
             } else {
                 dynChirpCfg[i].chirpRow[j].chirpNR2 = 0U;
             }
             iter++;
 
             if (iter < length) {
-                dynChirpCfg[i].chirpRow[j].chirpNR3 = message[iter]
+                dynChirpCfg[i].chirpRow[j].chirpNR3 = message[iter];
             } else {
                 dynChirpCfg[i].chirpRow[j].chirpNR3 = 0U;
             }
@@ -422,11 +423,11 @@ static int32_t Cfg_DynChirpCfgSetParams (char* message)
 
     for (i = 0; i < 2; i++) {
         dynChirpCfg[i].chirpRowSelect = 0x0;
-        dynChirpCfg[i].chirpSegSelect = i*3;
+        dynChirpCfg[i].chirpSegSel = i*3;
         dynChirpCfg[i].programMode = 0;
         for (j = 0; j < 2; j++) {
             if (iter < length) {
-                dynChirpCfg[i].chirpRow[j].chirpNR2 = message[iter]
+                dynChirpCfg[i].chirpRow[j].chirpNR2 = message[iter];
             } else {
                 dynChirpCfg[i].chirpRow[j].chirpNR2 = 0U;
             }
@@ -434,7 +435,7 @@ static int32_t Cfg_DynChirpCfgSetParams (char* message)
         }
     }
 
-    retVal = rlSetDynChirpCfg(RL_DEVICE_MAP_INTERNAL_BSS, 12U, (rlDynChirpCfg_t**)&dynChirpData[0U]);
+    retVal = rlSetDynChirpCfg(RL_DEVICE_MAP_INTERNAL_BSS, 12U, (rlDynChirpCfg_t**)&dynChirpCfg[0U]);
     if (retVal != 0)
     {
         System_printf("Error: rlSetDynChirpCfg retVal=%d\n", retVal);

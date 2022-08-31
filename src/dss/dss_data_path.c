@@ -1958,6 +1958,8 @@ void MmwDemo_interFrameProcessing(MmwDemo_DSS_DataPathObj *obj, uint8_t subframe
     /* Create the smallest meaningful array for the data that being sent out to the PC because 
      * the UART rate is quite low. */
     populateOutputs(obj);
+
+    strcpy(obj->message, "Hello World!");
     
     gCycleLog.interFrameProcessingTime += Cycleprofiler_getTimeStamp() - startTime - waitingTime;
     gCycleLog.interFrameWaitTime += waitingTime;
