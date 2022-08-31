@@ -770,6 +770,9 @@ typedef struct MmwDemo_DSS_DataPathObj_t
     /*! @brief The 'age' of the filtered result of the parking state. Added to make the 
      *  'smoother' visually. */
     uint16_t * parkingAssistBinsStateCnt;
+
+    /*! @brief The transmitted message. */
+    char message[512];
         
 } MmwDemo_DSS_DataPathObj;
 
