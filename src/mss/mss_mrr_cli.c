@@ -389,6 +389,150 @@ static int32_t MRR_MSS_CLIAdvancedFrameCfg (int32_t argc, char* argv[])
 /**
  *  @b Description
  *  @n
+ *      This is the CLI Handler for encoding custom configuration
+ *
+ *  @param[in] argc
+ *      Number of arguments
+ *  @param[in] argv
+ *      Arguments
+ *
+ *  @retval
+ *      Success -   0
+ *  @retval
+ *      Error   -   <0
+ */
+static int32_t MRR_MSS_CLICustomFrameCfg (int32_t argc, char* argv[])
+{
+    MMWave_OpenCfg          openCfg;
+    int32_t                 errCode;
+    rlProfileCfg_t          profileCfg[2]; //First profile is basic, Second profile is CW
+    rlChirpCfg_t            chirpCfg;
+    rlFrameCfg_t            frameCfg;
+    int32_t                 retVal;
+
+    if (gMrrMSSMCB.cfgStatus)
+    {
+        /* Radar has already been configured. */
+        return 0;
+    }
+     /* Setup the calibration frequency: */
+    openCfg.freqLimitLow  = 760U;
+    openCfg.freqLimitHigh = 810U;
+    openCfg.defaultAsyncEventHandler = MMWave_DefaultAsyncEventHandler_MSS;
+    
+    /* Initialize the minimal configuration: */
+    Cfg_ChannelCfgInitParams  (&openCfg.chCfg);
+    Cfg_LowPowerModeInitParams(&openCfg.lowPowerMode);
+    Cfg_ADCOutCfgInitParams   (&openCfg.adcOutCfg);
+
+    /* Open the mmWave module: */
+    if (MMWave_open (gMrrMSSMCB.ctrlHandle, &openCfg, NULL, &errCode) < 0)
+    {
+        System_printf ("Error: MMWDemoMSS mmWave open configuration failed [Error code %d]\n", errCode);
+        return -1;
+    }
+
+    /********************************************************************************
+     * MMWave Link and BSS is operational now. In minimal mode we have access to all
+     * the mmWave Link API to perform the configuration
+     *
+     * Profile configuration:
+     ********************************************************************************/
+    Cfg_ProfileCfgInitParams (0U, &profileCfg[0U]);
+    Cfg_ProfileCfgInitParams (2U, &profileCfg[1U]);
+    retVal = rlSetProfileConfig (RL_DEVICE_MAP_INTERNAL_BSS, 2U, &profileCfg[0U]);
+    if (retVal != RL_RET_CODE_OK)
+    {
+        System_printf ("Error: Unable to configure the profile [Error %d]\n", retVal);
+        return -1;
+    }
+
+    /********************************************************************************
+     * Chirp configuration:
+     ********************************************************************************/
+    Cfg_ChirpCfgInitParams (5U, &chirpCfg);
+    retVal = rlSetChirpConfig(RL_DEVICE_MAP_INTERNAL_BSS, 1U, &chirpCfg);
+    if (retVal != RL_RET_CODE_OK)
+    {
+        System_printf ("Error: Unable to configure the chirp [Error %d]\n", retVal);
+        return -1;
+    }
+
+    /********************************************************************************
+     * Frame configuration:
+     ********************************************************************************/
+    Cfg_FrameCfgInitParams (&frameCfg, 1U);
+    retVal = rlSetFrameConfig(RL_DEVICE_MAP_INTERNAL_BSS, &frameCfg);
+    if (retVal != RL_RET_CODE_OK)
+    {
+        System_printf ("Error: Unable to configure the frame [Error %d]\n", retVal);
+        return -1;
+    }
+
+    /* The link has been configured. */
+    gMrrMSSMCB.cfgStatus = true;
+    System_printf ("Debug: Custom configuration completed. Start the sensor...\n");
+    return 0;
+}
+
+/**
+ *  @b Description
+ *  @n
+ *      This is the CLI Handler for updating the dynamic chirp configuration
+ *
+ *  @param[in] argc
+ *      Number of arguments
+ *  @param[in] argv
+ *      Arguments
+ *
+ *  @retval
+ *      Success -   0
+ *  @retval
+ *      Error   -   <0
+ */
+static int32_t MRR_MSS_CLISetDynamicChirpCfg (int32_t argc, char* argv[])
+{
+    MMWave_OpenCfg          openCfg;
+    int32_t                 errCode;
+    rlProfileCfg_t          profileCfg;
+    rlChirpCfg_t            chirpCfg;
+    rlFrameCfg_t            frameCfg;
+    rlDynChirpEnCfg_t       dynChirpEnCfg = {0};
+    int32_t                 retVal;
+
+
+
+    /********************************************************************************
+     * Chirp configuration:
+     ********************************************************************************/
+
+    if (argc < 2) {
+        System_printf("Warning: No Message Received to transmit");
+        return 0;
+    }
+
+    /* Update dynamic configuration. */
+
+    if (Cfg_DynChirpCfgInitParams(argv[0]) < 0)
+    {
+        return -1;
+    }
+
+    /* Dynamic chirp enable */
+    retVal = rlSetDynChirpEn(RL_DEVICE_MAP_INTERNAL_BSS, &dynChirpEnCfg);
+    /* Check for mmWaveLink API call status */
+    if(retVal != 0)
+    {
+        /* Error: Link reported an issue. */
+        System_printf("Error: rlSetDynChirpEn retVal=%d\n", retVal);
+        return -1;
+    }
+    return 0;
+}
+
+/**
+ *  @b Description
+ *  @n
  *      This is the CLI Execution Task
  *
  *  @retval
@@ -426,6 +570,14 @@ void MRR_MSS_CLIInit (void)
     cliCfg.tableEntry[3].helpString     = "Stop the sensor";
     cliCfg.tableEntry[3].cmdHandlerFxn  = MRR_MSS_CLISensorStop;
 
+    cliCfg.tableEntry[4].cmd            = "customCfg";
+    cliCfg.tableEntry[4].helpString     = "Custom Frame Cfg";
+    cliCfg.tableEntry[4].cmdHandlerFxn  = MRR_MSS_CLICustomFrameCfg;
+
+    cliCfg.tableEntry[5].cmd            = "transmit";
+    cliCfg.tableEntry[5].helpString     = "Encode message into dynamic chirp";
+    cliCfg.tableEntry[5].cmdHandlerFxn  = MRR_MSS_CLISetDynamicChirpCfg;
+
     #if 0
     /* Open the CLI: */
     if (CLI_open (&cliCfg) < 0)
@@ -441,7 +593,7 @@ void MRR_MSS_CLIInit (void)
     gMrrMSSMCB.runningStatus = false;
     gMrrMSSMCB.isMMWaveOpen = false;
     
-    MRR_MSS_CLIAdvancedFrameCfg(1, dummy);
+    MRR_MSS_CLICustomFrameCfg(1, dummy);
     
     
     MRR_MSS_CLISensorStart(2, dummy);

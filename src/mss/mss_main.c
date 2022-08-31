@@ -1020,6 +1020,10 @@ static void MmwDemo_mboxReadTask(UArg arg0, UArg arg1)
                     CLI_write ("DSS Exception: %s, line %d.\n", message.body.assertInfo.file,
                         message.body.assertInfo.line);
                     break;
+                case MMWDEMO_DSS2MSS_COMM_INFO:
+                    //Communicate the information to the command line
+                    CLI_write("Message: %s", message.body.commInfo);
+                    break;
                 default:
                 {
                     /* Message not support */

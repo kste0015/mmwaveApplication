@@ -208,41 +208,60 @@ void Cfg_ProfileCfgInitParams (uint8_t profileNum, rlProfileCfg_t* ptrProfileCfg
     /* Initialize the configuration: */
     memset ((void*)ptrProfileCfg, 0, sizeof(rlProfileCfg_t));
 
-    if (profileNum == 0U)
+    switch (profileNum)
     {
-        /* Populate the default configuration for profile 0  */
-        ptrProfileCfg->profileId             = PROFILE_MRR_PROFILE_ID;
-        ptrProfileCfg->startFreqConst        = PROFILE_MRR_START_FREQ_VAL;
-        ptrProfileCfg->idleTimeConst         = PROFILE_MRR_IDLE_TIME_VAL;
-        ptrProfileCfg->adcStartTimeConst     = PROFILE_MRR_ADC_START_TIME_VAL;
-        ptrProfileCfg->rampEndTime           = PROFILE_MRR_RAMP_END_TIME_VAL;
-        ptrProfileCfg->txOutPowerBackoffCode = PROFILE_MRR_TXOUT_POWER_BACKOFF;
-        ptrProfileCfg->txPhaseShifter        = PROFILE_MRR_TXPHASESHIFTER_VAL;
-        ptrProfileCfg->freqSlopeConst        = PROFILE_MRR_FREQ_SLOPE_VAL;
-        ptrProfileCfg->txStartTime           = PROFILE_MRR_TX_START_TIME_VAL;
-        ptrProfileCfg->numAdcSamples         = PROFILE_MRR_ADC_SAMPLE_VAL;
-        ptrProfileCfg->digOutSampleRate      = PROFILE_MRR_DIGOUT_SAMPLERATE_VAL;
-        ptrProfileCfg->hpfCornerFreq1        = PROFILE_MRR_HPFCORNER_FREQ1_VAL;
-        ptrProfileCfg->hpfCornerFreq2        = PROFILE_MRR_HPFCORNER_FREQ2_VAL;
-        ptrProfileCfg->rxGain                = PROFILE_MRR_RX_GAIN_VAL;
-    }
-    else
-    {
-        /* Populate the default configuration for profile 1  */
-        ptrProfileCfg->profileId             = PROFILE_USRR_PROFILE_ID;
-        ptrProfileCfg->startFreqConst        = PROFILE_USRR_START_FREQ_VAL;
-        ptrProfileCfg->idleTimeConst         = PROFILE_USRR_IDLE_TIME_VAL;
-        ptrProfileCfg->adcStartTimeConst     = PROFILE_USRR_ADC_START_TIME_VAL;
-        ptrProfileCfg->rampEndTime           = PROFILE_USRR_RAMP_END_TIME_VAL;
-        ptrProfileCfg->txOutPowerBackoffCode = PROFILE_USRR_TXOUT_POWER_BACKOFF;
-        ptrProfileCfg->txPhaseShifter        = PROFILE_USRR_TXPHASESHIFTER_VAL;
-        ptrProfileCfg->freqSlopeConst        = PROFILE_USRR_FREQ_SLOPE_VAL;
-        ptrProfileCfg->txStartTime           = PROFILE_USRR_TX_START_TIME_VAL;
-        ptrProfileCfg->numAdcSamples         = PROFILE_USRR_ADC_SAMPLE_VAL;
-        ptrProfileCfg->digOutSampleRate      = PROFILE_USRR_DIGOUT_SAMPLERATE_VAL;
-        ptrProfileCfg->hpfCornerFreq1        = PROFILE_USRR_HPFCORNER_FREQ1_VAL;
-        ptrProfileCfg->hpfCornerFreq2        = PROFILE_USRR_HPFCORNER_FREQ2_VAL;
-        ptrProfileCfg->rxGain                = PROFILE_USRR_RX_GAIN_VAL;
+        case 0U:
+            /* Populate the default configuration for profile 0  */
+            ptrProfileCfg->profileId             = PROFILE_MRR_PROFILE_ID;
+            ptrProfileCfg->startFreqConst        = PROFILE_MRR_START_FREQ_VAL;
+            ptrProfileCfg->idleTimeConst         = PROFILE_MRR_IDLE_TIME_VAL;
+            ptrProfileCfg->adcStartTimeConst     = PROFILE_MRR_ADC_START_TIME_VAL;
+            ptrProfileCfg->rampEndTime           = PROFILE_MRR_RAMP_END_TIME_VAL;
+            ptrProfileCfg->txOutPowerBackoffCode = PROFILE_MRR_TXOUT_POWER_BACKOFF;
+            ptrProfileCfg->txPhaseShifter        = PROFILE_MRR_TXPHASESHIFTER_VAL;
+            ptrProfileCfg->freqSlopeConst        = PROFILE_MRR_FREQ_SLOPE_VAL;
+            ptrProfileCfg->txStartTime           = PROFILE_MRR_TX_START_TIME_VAL;
+            ptrProfileCfg->numAdcSamples         = PROFILE_MRR_ADC_SAMPLE_VAL;
+            ptrProfileCfg->digOutSampleRate      = PROFILE_MRR_DIGOUT_SAMPLERATE_VAL;
+            ptrProfileCfg->hpfCornerFreq1        = PROFILE_MRR_HPFCORNER_FREQ1_VAL;
+            ptrProfileCfg->hpfCornerFreq2        = PROFILE_MRR_HPFCORNER_FREQ2_VAL;
+            ptrProfileCfg->rxGain                = PROFILE_MRR_RX_GAIN_VAL;
+            break;
+        
+        case 1U:
+            /* Populate the default configuration for profile 1  */
+            ptrProfileCfg->profileId             = PROFILE_USRR_PROFILE_ID;
+            ptrProfileCfg->startFreqConst        = PROFILE_USRR_START_FREQ_VAL;
+            ptrProfileCfg->idleTimeConst         = PROFILE_USRR_IDLE_TIME_VAL;
+            ptrProfileCfg->adcStartTimeConst     = PROFILE_USRR_ADC_START_TIME_VAL;
+            ptrProfileCfg->rampEndTime           = PROFILE_USRR_RAMP_END_TIME_VAL;
+            ptrProfileCfg->txOutPowerBackoffCode = PROFILE_USRR_TXOUT_POWER_BACKOFF;
+            ptrProfileCfg->txPhaseShifter        = PROFILE_USRR_TXPHASESHIFTER_VAL;
+            ptrProfileCfg->freqSlopeConst        = PROFILE_USRR_FREQ_SLOPE_VAL;
+            ptrProfileCfg->txStartTime           = PROFILE_USRR_TX_START_TIME_VAL;
+            ptrProfileCfg->numAdcSamples         = PROFILE_USRR_ADC_SAMPLE_VAL;
+            ptrProfileCfg->digOutSampleRate      = PROFILE_USRR_DIGOUT_SAMPLERATE_VAL;
+            ptrProfileCfg->hpfCornerFreq1        = PROFILE_USRR_HPFCORNER_FREQ1_VAL;
+            ptrProfileCfg->hpfCornerFreq2        = PROFILE_USRR_HPFCORNER_FREQ2_VAL;
+            ptrProfileCfg->rxGain                = PROFILE_USRR_RX_GAIN_VAL;
+            break;
+        
+        default:
+            /* Populate the default configuration for profile 2 */
+            ptrProfileCfg->profileId             = PROFILE_DYNAMIC_PROFILE_ID;
+            ptrProfileCfg->startFreqConst        = PROFILE_DYNAMIC_START_FREQ_VAL;
+            ptrProfileCfg->idleTimeConst         = PROFILE_DYNAMIC_IDLE_TIME_VAL;
+            ptrProfileCfg->adcStartTimeConst     = PROFILE_DYNAMIC_ADC_START_TIME_VAL;
+            ptrProfileCfg->rampEndTime           = PROFILE_DYNAMIC_RAMP_END_TIME_VAL;
+            ptrProfileCfg->txOutPowerBackoffCode = PROFILE_DYNAMIC_TXOUT_POWER_BACKOFF;
+            ptrProfileCfg->txPhaseShifter        = PROFILE_DYNAMIC_TXPHASESHIFTER_VAL;
+            ptrProfileCfg->freqSlopeConst        = PROFILE_DYNAMIC_FREQ_SLOPE_VAL;
+            ptrProfileCfg->txStartTime           = PROFILE_DYNAMIC_TX_START_TIME_VAL;
+            ptrProfileCfg->numAdcSamples         = PROFILE_DYNAMIC_ADC_SAMPLE_VAL;
+            ptrProfileCfg->digOutSampleRate      = PROFILE_DYNAMIC_DIGOUT_SAMPLERATE_VAL;
+            ptrProfileCfg->hpfCornerFreq1        = PROFILE_DYNAMIC_HPFCORNER_FREQ1_VAL;
+            ptrProfileCfg->hpfCornerFreq2        = PROFILE_DYNAMIC_HPFCORNER_FREQ2_VAL;
+            ptrProfileCfg->rxGain                = PROFILE_DYNAMIC_RX_GAIN_VAL;
     }
     return;
 }
@@ -266,76 +285,162 @@ void Cfg_ChirpCfgInitParams (uint8_t chirpNum, rlChirpCfg_t* ptrChirpCfg)
     /* Initialize the configuration: */
     memset ((void*)ptrChirpCfg, 0, sizeof(rlChirpCfg_t));
 
-    if (chirpNum == 0U)
+    switch(chirpNum)
     {
-        /* Populate the default configuration for chirp 0. 
-         *  - MRR Fast Chirp for max-velocity enhancement. */
-        ptrChirpCfg->profileId       = CHIRP_MRR_0_PROFILE_ID;
-        ptrChirpCfg->adcStartTimeVar = CHIRP_MRR_0_ADC_START_TIME_VAL;
-        ptrChirpCfg->chirpEndIdx     = CHIRP_MRR_0_END_INDEX;
-        ptrChirpCfg->chirpStartIdx   = CHIRP_MRR_0_START_INDEX;
-        ptrChirpCfg->idleTimeVar     = CHIRP_MRR_0_IDLE_TIME_VAL;
-        ptrChirpCfg->txEnable        = CHIRP_MRR_0_TX_CHANNEL;
-        ptrChirpCfg->startFreqVar    = CHIRP_MRR_0_START_FREQ_VAL;
-        ptrChirpCfg->freqSlopeVar    = CHIRP_MRR_0_FREQ_SLOPE_VAL;
+        case 0u:
+            /* Populate the default configuration for chirp 0. 
+            *  - MRR Fast Chirp for max-velocity enhancement. */
+            ptrChirpCfg->profileId       = CHIRP_MRR_0_PROFILE_ID;
+            ptrChirpCfg->adcStartTimeVar = CHIRP_MRR_0_ADC_START_TIME_VAL;
+            ptrChirpCfg->chirpEndIdx     = CHIRP_MRR_0_END_INDEX;
+            ptrChirpCfg->chirpStartIdx   = CHIRP_MRR_0_START_INDEX;
+            ptrChirpCfg->idleTimeVar     = CHIRP_MRR_0_IDLE_TIME_VAL;
+            ptrChirpCfg->txEnable        = CHIRP_MRR_0_TX_CHANNEL;
+            ptrChirpCfg->startFreqVar    = CHIRP_MRR_0_START_FREQ_VAL;
+            ptrChirpCfg->freqSlopeVar    = CHIRP_MRR_0_FREQ_SLOPE_VAL;
+            break;
+        case 1U:
+            /* Populate the default configuration for chirp 2 
+            *  - MRR Slow Chirp for max-velocity enhancement. */
+            ptrChirpCfg->profileId       = CHIRP_MRR_1_PROFILE_ID;
+            ptrChirpCfg->adcStartTimeVar = CHIRP_MRR_1_ADC_START_TIME_VAL;
+            ptrChirpCfg->chirpEndIdx     = CHIRP_MRR_1_END_INDEX;
+            ptrChirpCfg->chirpStartIdx   = CHIRP_MRR_1_START_INDEX;
+            ptrChirpCfg->idleTimeVar     = CHIRP_MRR_1_IDLE_TIME_VAL;
+            ptrChirpCfg->txEnable        = CHIRP_MRR_1_TX_CHANNEL;
+            ptrChirpCfg->startFreqVar    = CHIRP_MRR_1_START_FREQ_VAL;
+            ptrChirpCfg->freqSlopeVar    = CHIRP_MRR_1_FREQ_SLOPE_VAL;
+            break;
+        case 2U:
+            /* Populate the default configuration for chirp 3 
+            *  - USRR Tx1 . */
+            ptrChirpCfg->profileId       = CHIRP_USRR_0_PROFILE_ID;
+            ptrChirpCfg->adcStartTimeVar = CHIRP_USRR_0_ADC_START_TIME_VAL;
+            ptrChirpCfg->chirpEndIdx     = CHIRP_USRR_0_END_INDEX;
+            ptrChirpCfg->chirpStartIdx   = CHIRP_USRR_0_START_INDEX;
+            ptrChirpCfg->idleTimeVar     = CHIRP_USRR_0_IDLE_TIME_VAL;
+            ptrChirpCfg->txEnable        = CHIRP_USRR_0_TX_CHANNEL;
+            ptrChirpCfg->startFreqVar    = CHIRP_USRR_0_START_FREQ_VAL;
+            ptrChirpCfg->freqSlopeVar    = CHIRP_USRR_0_FREQ_SLOPE_VAL;
+            break;
+        case 3U:
+            /* Populate the default configuration for chirp 3 
+            *  - USRR Tx2. */
+            ptrChirpCfg->profileId       = CHIRP_USRR_1_PROFILE_ID;
+            ptrChirpCfg->adcStartTimeVar = CHIRP_USRR_1_ADC_START_TIME_VAL;
+            ptrChirpCfg->chirpEndIdx     = CHIRP_USRR_1_END_INDEX;
+            ptrChirpCfg->chirpStartIdx   = CHIRP_USRR_1_START_INDEX;
+            ptrChirpCfg->idleTimeVar     = CHIRP_USRR_1_IDLE_TIME_VAL;
+            ptrChirpCfg->txEnable        = CHIRP_USRR_1_TX_CHANNEL;
+            ptrChirpCfg->startFreqVar    = CHIRP_USRR_1_START_FREQ_VAL;
+            ptrChirpCfg->freqSlopeVar    = CHIRP_USRR_1_FREQ_SLOPE_VAL;
+            break;
+        case 4U:
+            /* Populate the default configuration for chirp 4 
+            *  - USRR Tx3. */
+            ptrChirpCfg->profileId       = CHIRP_USRR_2_PROFILE_ID;
+            ptrChirpCfg->adcStartTimeVar = CHIRP_USRR_2_ADC_START_TIME_VAL;
+            ptrChirpCfg->chirpEndIdx     = CHIRP_USRR_2_END_INDEX;
+            ptrChirpCfg->chirpStartIdx   = CHIRP_USRR_2_START_INDEX;
+            ptrChirpCfg->idleTimeVar     = CHIRP_USRR_2_IDLE_TIME_VAL;
+            ptrChirpCfg->txEnable        = CHIRP_USRR_2_TX_CHANNEL;
+            ptrChirpCfg->startFreqVar    = CHIRP_USRR_2_START_FREQ_VAL;
+            ptrChirpCfg->freqSlopeVar    = CHIRP_USRR_2_FREQ_SLOPE_VAL;
+        default:
+            /* Populate the default configuration for chirp 5 
+            *  DYNAMIC. */
+            ptrChirpCfg->profileId       = CHIRP_DYNAMIC_PROFILE_ID;
+            ptrChirpCfg->adcStartTimeVar = CHIRP_DYNAMIC_ADC_START_TIME_VAL;
+            ptrChirpCfg->chirpEndIdx     = CHIRP_DYNAMIC_END_INDEX;
+            ptrChirpCfg->chirpStartIdx   = CHIRP_DYNAMIC_START_INDEX;
+            ptrChirpCfg->idleTimeVar     = CHIRP_DYNAMIC_IDLE_TIME_VAL;
+            ptrChirpCfg->txEnable        = CHIRP_DYNAMIC_TX_CHANNEL;
+            ptrChirpCfg->startFreqVar    = CHIRP_DYNAMIC_START_FREQ_VAL;
+            ptrChirpCfg->freqSlopeVar    = CHIRP_DYNAMIC_FREQ_SLOPE_VAL;
     }
-    else if (chirpNum == 1U)
-    {
-        /* Populate the default configuration for chirp 2 
-         *  - MRR Slow Chirp for max-velocity enhancement. */
-        ptrChirpCfg->profileId       = CHIRP_MRR_1_PROFILE_ID;
-        ptrChirpCfg->adcStartTimeVar = CHIRP_MRR_1_ADC_START_TIME_VAL;
-        ptrChirpCfg->chirpEndIdx     = CHIRP_MRR_1_END_INDEX;
-        ptrChirpCfg->chirpStartIdx   = CHIRP_MRR_1_START_INDEX;
-        ptrChirpCfg->idleTimeVar     = CHIRP_MRR_1_IDLE_TIME_VAL;
-        ptrChirpCfg->txEnable        = CHIRP_MRR_1_TX_CHANNEL;
-        ptrChirpCfg->startFreqVar    = CHIRP_MRR_1_START_FREQ_VAL;
-        ptrChirpCfg->freqSlopeVar    = CHIRP_MRR_1_FREQ_SLOPE_VAL;
-    }
-    else if (chirpNum == 2U)
-    {
-        /* Populate the default configuration for chirp 3 
-         *  - USRR Tx1 . */
-        ptrChirpCfg->profileId       = CHIRP_USRR_0_PROFILE_ID;
-        ptrChirpCfg->adcStartTimeVar = CHIRP_USRR_0_ADC_START_TIME_VAL;
-        ptrChirpCfg->chirpEndIdx     = CHIRP_USRR_0_END_INDEX;
-        ptrChirpCfg->chirpStartIdx   = CHIRP_USRR_0_START_INDEX;
-        ptrChirpCfg->idleTimeVar     = CHIRP_USRR_0_IDLE_TIME_VAL;
-        ptrChirpCfg->txEnable        = CHIRP_USRR_0_TX_CHANNEL;
-        ptrChirpCfg->startFreqVar    = CHIRP_USRR_0_START_FREQ_VAL;
-        ptrChirpCfg->freqSlopeVar    = CHIRP_USRR_0_FREQ_SLOPE_VAL;
-    }
-    else if (chirpNum == 3U)
-    {
-        /* Populate the default configuration for chirp 3 
-         *  - USRR Tx2. */
-        ptrChirpCfg->profileId       = CHIRP_USRR_1_PROFILE_ID;
-        ptrChirpCfg->adcStartTimeVar = CHIRP_USRR_1_ADC_START_TIME_VAL;
-        ptrChirpCfg->chirpEndIdx     = CHIRP_USRR_1_END_INDEX;
-        ptrChirpCfg->chirpStartIdx   = CHIRP_USRR_1_START_INDEX;
-        ptrChirpCfg->idleTimeVar     = CHIRP_USRR_1_IDLE_TIME_VAL;
-        ptrChirpCfg->txEnable        = CHIRP_USRR_1_TX_CHANNEL;
-        ptrChirpCfg->startFreqVar    = CHIRP_USRR_1_START_FREQ_VAL;
-        ptrChirpCfg->freqSlopeVar    = CHIRP_USRR_1_FREQ_SLOPE_VAL;
-        
-    }
-    else if (chirpNum == 4U)
-    {
-        /* Populate the default configuration for chirp 4 
-         *  - USRR Tx3. */
-        ptrChirpCfg->profileId       = CHIRP_USRR_2_PROFILE_ID;
-        ptrChirpCfg->adcStartTimeVar = CHIRP_USRR_2_ADC_START_TIME_VAL;
-        ptrChirpCfg->chirpEndIdx     = CHIRP_USRR_2_END_INDEX;
-        ptrChirpCfg->chirpStartIdx   = CHIRP_USRR_2_START_INDEX;
-        ptrChirpCfg->idleTimeVar     = CHIRP_USRR_2_IDLE_TIME_VAL;
-        ptrChirpCfg->txEnable        = CHIRP_USRR_2_TX_CHANNEL;
-        ptrChirpCfg->startFreqVar    = CHIRP_USRR_2_START_FREQ_VAL;
-        ptrChirpCfg->freqSlopeVar    = CHIRP_USRR_2_FREQ_SLOPE_VAL;
-    
-    }
-    
     
     return;
+}
+
+/**
+ *  @b Description
+ *  @n
+ *      The function sets the dynamic chirp configuration based on a message;
+ *
+ *  @param[out] message
+ *      Pointer to the string of the message
+ *
+ *  @retval
+ *      Success -   0
+ *  @retval
+ *      Error   -   <0
+ */
+static int32_t Cfg_DynChirpCfgSetParams (char* message)
+{
+    size_t length = strlen(message);
+    uint8_t dynCount = length / 48 + 1;
+    rlDynChirpCfg_t dynChirpCfg[12];
+    uint8_t i,j;
+    uint16_t iter = 0;
+    
+    for (i = 0; i < 10; i++) {
+        dynChirpCfg[i].chirpRowSelect = 0x20;
+        dynChirpCfg[i].chirpSegSelect = i*3;
+        dynChirpCfg[i].programMode = 0;
+        for (j = 0; j < 16; j++) {
+            if (iter < length) {
+                dynChirpCfg[i].chirpRow[j].chirpNR1 = message[iter]
+            } else {
+                dynChirpCfg[i].chirpRow[j].chirpNR1 = 0U;
+            }
+            iter++;
+
+            if (iter < length) {
+                dynChirpCfg[i].chirpRow[j].chirpNR2 = message[iter]
+            } else {
+                dynChirpCfg[i].chirpRow[j].chirpNR2 = 0U;
+            }
+            iter++;
+
+            if (iter < length) {
+                dynChirpCfg[i].chirpRow[j].chirpNR3 = message[iter]
+            } else {
+                dynChirpCfg[i].chirpRow[j].chirpNR3 = 0U;
+            }
+            iter++;
+            // for (k = 0; k < 3; k++) {
+            //     if (iter < length) {
+            //         dynChirpCfg[i].chirpRow[j] = 
+            //     } else {
+            //         chirpRow[k] = 0U;
+            //     }
+            //     iter++;
+            // }
+            // dynChirpCfg[i].chirpRow[j] = {1,1,1}
+        }
+    }
+
+    for (i = 0; i < 2; i++) {
+        dynChirpCfg[i].chirpRowSelect = 0x0;
+        dynChirpCfg[i].chirpSegSelect = i*3;
+        dynChirpCfg[i].programMode = 0;
+        for (j = 0; j < 2; j++) {
+            if (iter < length) {
+                dynChirpCfg[i].chirpRow[j].chirpNR2 = message[iter]
+            } else {
+                dynChirpCfg[i].chirpRow[j].chirpNR2 = 0U;
+            }
+            iter++;
+        }
+    }
+
+    retVal = rlSetDynChirpCfg(RL_DEVICE_MAP_INTERNAL_BSS, 12U, (rlDynChirpCfg_t**)&dynChirpData[0U]);
+    if (retVal != 0)
+    {
+        System_printf("Error: rlSetDynChirpCfg retVal=%d\n", retVal);
+        return -1;
+    }
+    return 0;
 }
 
 /**
