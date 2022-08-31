@@ -302,7 +302,7 @@ extern void MRR_MSS_CLIInit (void);
  * Extern CFG API:
  *******************************************************************************************/
 extern void Cfg_AdvFrameCfgInitParams (rlAdvFrameCfg_t* ptrAdvFrameCfg);
-extern void Cfg_FrameCfgInitParams (rlFrameCfg_t* ptrFrameCfg);
+extern void Cfg_FrameCfgInitParams (uint8_t frameNum, rlFrameCfg_t* ptrFrameCfg);
 extern void Cfg_ProfileCfgInitParams (uint8_t profileNum, rlProfileCfg_t* ptrProfileCfg);
 extern void Cfg_ChirpCfgInitParams (uint8_t chirpNum, rlChirpCfg_t* ptrChirpCfg);
 extern void Cfg_LowPowerModeInitParams (rlLowPowerModeCfg_t* ptrLowPowerMode);
