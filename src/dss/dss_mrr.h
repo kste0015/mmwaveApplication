@@ -240,6 +240,7 @@ extern void Cfg_AdvFrameCfgInitParams (rlAdvFrameCfg_t* ptrAdvFrameCfg);
 extern void Cfg_FrameCfgInitParams (uint8_t frameNum, rlFrameCfg_t* ptrFrameCfg);
 extern void Cfg_ProfileCfgInitParams (uint8_t profileNum, rlProfileCfg_t* ptrProfileCfg);
 extern void Cfg_ChirpCfgInitParams (uint8_t chirpNum, rlChirpCfg_t* ptrChirpCfg);
+extern int32_t Cfg_DynChirpCfgSetParams (char* message);
 extern void Cfg_LowPowerModeInitParams (rlLowPowerModeCfg_t* ptrLowPowerMode);
 extern void Cfg_ChannelCfgInitParams (rlChanCfg_t* ptrChannelCfg);
 extern void Cfg_ADCOutCfgInitParams (rlAdcOutCfg_t* ptrADCOutCfg);

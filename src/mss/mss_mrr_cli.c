@@ -515,7 +515,7 @@ static int32_t MRR_MSS_CLISetDynamicChirpCfg (int32_t argc, char* argv[])
 
     /* Update dynamic configuration. */
 
-    if (Cfg_DynChirpCfgSetParams(argv[0]) < 0)
+    if (Cfg_DynChirpCfgSetParams(argv[1]) < 0)
     {
         return -1;
     }
