@@ -166,7 +166,7 @@ static int32_t MRR_DSS_SendProcessOutputToMSS(uint8_t *ptrHsmBuffer,
                                                  uint32_t outputBufSize,
                                                  MmwDemo_DSS_DataPathObj *obj);
 static void MRR_DSS_DataPathOutputLogging(MmwDemo_DSS_DataPathObj * dataPathObj);
-static void MRR_DSS_SendMessageOutputToMSS(char* decodedMessage);
+static int32_t MRR_DSS_SendMessageOutputToMSS(char* decodedMessage);
 static void MRR_DSS_DecodedMessageOutputLogging(char* decodedMessage);
 static void MmwDemo_mboxReadProc();
 void MmwDemo_mboxCallback(Mbox_Handle handle, Mailbox_Type peer);
@@ -287,7 +287,7 @@ static void MRR_DSS_mmWaveTask(UArg arg0, UArg arg1)
 
                 /* Sending detected objects to logging buffer */
                 // MRR_DSS_DataPathOutputLogging(dataPathObj);
-                MRR_DSS_DecodedMessageOutputLogging(dataPathObj->message)
+                MRR_DSS_DecodedMessageOutputLogging(dataPathObj->message);
                 dataPathObj->timingInfo.interFrameProcessingEndTime = Cycleprofiler_getTimeStamp();
 
                 /* Update the subframeIndx */
