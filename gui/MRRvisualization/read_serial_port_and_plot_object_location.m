@@ -51,6 +51,7 @@ MMWDEMO_UART_MSG_CLUSTERS           = 2;
 MMWDEMO_UART_MSG_TRACKED_OBJ        = 3;
 MMWDEMO_UART_MSG_PARKING_ASSIST     = 4;
 MMWDEMO_UART_MSG_STATS = 6;
+MMWDEMO_UART_MSG_COMM_INFO = 7;
 
 load_point_cloud_srr = 0;
 load_point_cloud_usrr = 0;
@@ -220,6 +221,9 @@ while (~EXIT_KEY_PRESSED)
                         UpdateDisplayTable(Params);
                         displayUpdateCntr = 0;
                     end
+                case MMWDEMO_UART_MSG_COMM_INFO
+                    [message, byteVecIdx] = getCommMessage(bytevec_cp_flt, byteVecIdx);
+                    set(guiMonitor.commInfo, 'String', message);
                 otherwise
             end
         end
@@ -705,6 +709,13 @@ function [StatsInfo, idx] = getStatsInfo(bytevec, idx)
     StatsInfo.interFrameCPULoad = sum(bytevec(idx+(1:4)) .* word);
     idx = idx + 4;
 return
+
+function [Message, idx] = getCommMessage(bytevec, idx)
+    bytes = bytevec(idx+(1:512));
+    Message = char(bytes);
+    idx = idx + 512;
+    return
+
 
 
 function [sphandle] = configureSport(comportSnum)

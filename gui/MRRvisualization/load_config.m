@@ -37,7 +37,7 @@ function [result] = load_config(comportCliNum)
 result = 1;
 fprintf('Starting UI for mmWave Demo ....\n'); 
 
-cliCfg{1} = 'advFrameCfg';
+cliCfg{1} = 'customCfg';
 cliCfg{2} = 'sensorStart';
 
 spCliHandle = configureCliPort(comportCliNum);

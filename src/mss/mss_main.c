@@ -1022,8 +1022,16 @@ static void MmwDemo_mboxReadTask(UArg arg0, UArg arg1)
                     break;
                 case MMWDEMO_DSS2MSS_COMM_INFO:
                     //Communicate the information to the command line
-                    CLI_write("Message: %s", message.body.commInfo);
-                    break;
+                    // CLI_write("Message: %s", message.body.commInfo);
+                    // break;
+                    uint32_t totalPacketLen = 512U;
+                    uint32_t numPaddingBytes;
+                    uint32_t itemIdx;
+
+                    /* Send message */
+                    UART_writePolling(gMrrMSSMCB.loggingUartHandle,(uint8_t*)&message.body.commInfo,512U);
+                    txMsgObjectParams.msgIdentifier = Get_CanMessageIdentifier((MmwDemo_output_message_type)8U);
+                    Can_Transmit_Schedule(txMsgObjectParams.msgIdentifier,(uint8_t*)&message.body.commInfo,512U);
                 default:
                 {
                     /* Message not support */

@@ -144,6 +144,9 @@ function guiMonitor = gui_initializer(Params, dim, show_params)
     
     % plotRectGrid(dim.max_dist_y, dim.max_vel);
 
+    %% Communication Info
+    guiMonitor.commInfo = annotation('textbox','String','...','Position',[.1 .1 .6 .8]);
+
     %% GUI filtering options
     step = 0.15; offset = 0.05; halfStep = 0.2; height = 0.075; 
     thickness = 0.3; h_thickness = 0.5; width = step; chkbxwidth = step/5;

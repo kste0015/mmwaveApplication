@@ -286,8 +286,8 @@ static void MRR_DSS_mmWaveTask(UArg arg0, UArg arg1)
                 gCycleLog.interFrameWaitTime = 0;
 
                 /* Sending detected objects to logging buffer */
-                // MRR_DSS_DataPathOutputLogging(dataPathObj);
-                MRR_DSS_DecodedMessageOutputLogging(dataPathObj->message);
+                MRR_DSS_DataPathOutputLogging(dataPathObj);
+                // MRR_DSS_DecodedMessageOutputLogging(dataPathObj->message);
                 dataPathObj->timingInfo.interFrameProcessingEndTime = Cycleprofiler_getTimeStamp();
 
                 /* Update the subframeIndx */
@@ -1001,6 +1001,20 @@ int32_t MRR_DSS_SendProcessOutputToMSS(uint8_t *ptrHsmBuffer,
         ptrCurrBuffer += itemPayloadLen + sizeof(MmwDemo_output_message_dataObjDescr);
         totalPacketLen += sizeof(MmwDemo_output_message_tl) + itemPayloadLen + sizeof(MmwDemo_output_message_dataObjDescr);
     }
+
+    /* Add communication message to payload */
+    itemPayloadLen = sizeof(MmwDemo_message);
+    totalHsmSize += itemPayloadLen;
+    if (totalHsmSize > outputBufSize)
+    {
+        retVal = -1;
+        goto Exit;
+    }
+    memcpy(ptrCurrBuffer, (void *) obj->message, itemPayloadLen);
+    message.body.detObj.tlv[tlvIdx].length = itemPayloadLen;
+    message.body.detObj.tlv[tlvIdx].type = MMWDEMO_OUTPUT_MSG_COMM_INFO;
+    message.body.detObj.tlv[tlvIdx].address = (uint32_t) ptrCurrBuffer;
+    tlvIdx++;
 
     if (tlvIdx >= MMWDEMO_OUTPUT_MSG_MAX)
     {
