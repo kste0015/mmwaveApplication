@@ -1,17 +1,17 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="3933184580" file="D:\ti\mmwave_sdk-MMWAVE_SDK_03_00_00_01\ti\demo\xwr18xx\srr\gui\SRRvisualization\srr_visualization.prj" location="D:\ti\mmwave_sdk-MMWAVE_SDK_03_00_00_01\ti\demo\xwr18xx\srr\gui\SRRvisualization" name="srr_visualization" preferred-package-location="D:\ti\mmwave_sdk-MMWAVE_SDK_03_00_00_01\ti\demo\xwr18xx\srr\gui\SRRvisualization\srr_visualization\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
-    <param.appname>srr_visualization</param.appname>
+  <configuration build-checksum="3933184580" file="C:\ti\mmwave_comm_application\mmwaveApplication\gui\MRRvisualization\srr_visualization.prj" location="C:\ti\mmwave_comm_application\mmwaveApplication\gui\MRRvisualization" name="srr_visualization" preferred-package-location="D:\ti\mmwave_sdk-MMWAVE_SDK_03_00_00_01\ti\demo\xwr18xx\srr\gui\SRRvisualization\srr_visualization\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
+    <param.appname>COMM_Visualizer</param.appname>
     <param.icon />
     <param.icons />
     <param.version>1.2</param.version>
-    <param.authnamewatermark />
-    <param.email />
-    <param.company />
+    <param.authnamewatermark>Kyle Steele</param.authnamewatermark>
+    <param.email>kste0025@student.monash.edu</param.email>
+    <param.company>Monash University</param.company>
     <param.summary>A visualizer for the MRR/SRR TI Design project</param.summary>
-    <param.description>With Y-Z plot</param.description>
+    <param.description>With Y-Z plot and Communication information</param.description>
     <param.screenshot />
     <param.guid />
-    <param.installpath.string>\srr_visualization\</param.installpath.string>
+    <param.installpath.string>\Monash University\COMM_Visualizer\</param.installpath.string>
     <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
     <param.logo />
     <param.install.notes />
@@ -36,18 +36,23 @@
     <param.native.matlab>false</param.native.matlab>
     <param.checkbox>false</param.checkbox>
     <param.example />
-    <param.help.text />
+    <param.help.text>Syntax 
+	 srr_ti_design_visualization -? 
+	 srr_ti_design_visualization data_port loadCfg max_dist_y max_dist_x max_vel record filename_rec 
+ Input Arguments 
+	 -?  print help on how to use the application 
+	 data_port loadCfg max_dist_y max_dist_x max_vel record filename_rec  input arguments 
+ Description 
+ 	 With Y-Z plot and Communication information</param.help.text>
     <unset>
       <param.icon />
       <param.icons />
-      <param.authnamewatermark />
-      <param.email />
-      <param.company />
       <param.screenshot />
       <param.guid />
       <param.installpath.string />
       <param.installpath.combo />
       <param.logo />
+      <param.install.notes />
       <param.target.install.notes />
       <param.intermediate />
       <param.files.only />
@@ -69,7 +74,6 @@
       <param.native.matlab />
       <param.checkbox />
       <param.example />
-      <param.help.text />
     </unset>
     <fileset.main>
       <file>${PROJECT_ROOT}\srr_ti_design_visualization.m</file>
@@ -90,27 +94,14 @@
       <file>${PROJECT_ROOT}\read_serial_port_and_plot_object_location_with_serial_obd.m</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\srr_visualization\for_testing" name="readme.txt" optional="true">D:\ti\mmwave_sdk-MMWAVE_SDK_03_00_00_01\ti\demo\xwr18xx\srr\gui\SRRvisualization\srr_visualization\for_testing\readme.txt</file>
-      <file location="${PROJECT_ROOT}\srr_visualization\for_testing" name="srr_visualization.exe" optional="false">D:\ti\mmwave_sdk-MMWAVE_SDK_03_00_00_01\ti\demo\xwr18xx\srr\gui\SRRvisualization\srr_visualization\for_testing\srr_visualization.exe</file>
-      <file location="${PROJECT_ROOT}\srr_visualization\for_testing" name="splash.png" optional="false">D:\ti\mmwave_sdk-MMWAVE_SDK_03_00_00_01\ti\demo\xwr18xx\srr\gui\SRRvisualization\srr_visualization\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\srr_visualization\for_testing" name="splash.png" optional="false">C:\ti\mmwave_comm_application\mmwaveApplication\gui\MRRvisualization\srr_visualization\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\srr_visualization\for_testing" name="readme.txt" optional="true">C:\ti\mmwave_comm_application\mmwaveApplication\gui\MRRvisualization\srr_visualization\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\srr_visualization\for_testing" name="COMM_Visualizer.exe" optional="false">C:\ti\mmwave_comm_application\mmwaveApplication\gui\MRRvisualization\srr_visualization\for_testing\COMM_Visualizer.exe</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files\MATLAB\R2017b</root>
-      <toolboxes>
-        <toolbox name="fixedpoint" />
-        <toolbox name="matlabcoder" />
-      </toolboxes>
-      <toolbox>
-        <fixedpoint>
-          <enabled>true</enabled>
-        </fixedpoint>
-      </toolbox>
-      <toolbox>
-        <matlabcoder>
-          <enabled>true</enabled>
-        </matlabcoder>
-      </toolbox>
+      <root>C:\Program Files\MATLAB\R2022a</root>
+      <toolboxes />
     </matlab>
     <platform>
       <unix>false</unix>
