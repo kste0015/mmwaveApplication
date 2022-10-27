@@ -1571,9 +1571,11 @@ void MmwDemo_dcRangeSignatureCompensation(MmwDemo_DSS_DataPathObj *obj, uint8_t 
 */
 void MmwDemo_interChirpProcessing(MmwDemo_DSS_DataPathObj *obj, uint32_t chirpPingPongId, uint8_t subframeIndx)
 {
-    uint32_t antIndx, waitingTime;
+    uint32_t rangeIdx, curMax, curMaxIdx, antIndx, waitingTime;
     volatile uint32_t startTime;
     volatile uint32_t startTime1;
+
+    int16_t fftout1d[obj->numRangeBins];
 
     waitingTime = 0;
     startTime = Cycleprofiler_getTimeStamp();
@@ -1618,16 +1620,30 @@ void MmwDemo_interChirpProcessing(MmwDemo_DSS_DataPathObj *obj, uint32_t chirpPi
             obj->numAdcSamples);
         memset((void *)&obj->adcDataIn[pingPongId(antIndx) * obj->numRangeBins + obj->numAdcSamples],
             0, (obj->numRangeBins - obj->numAdcSamples) * sizeof(cmplx16ReIm_t));
-        
-        
-        
+    }
+
+    if (obj->chirpCount < 100)
+    {
         DSP_fft16x16(
             (int16_t *)obj->twiddle16x16_1D,
             obj->numRangeBins,
             (int16_t *)&obj->adcDataIn[pingPongId(antIndx) * obj->numRangeBins],
-            (int16_t *)&obj->fftOut1D[chirpPingPongId * (obj->numRxAntennas * obj->numRangeBins) +
-            (obj->numRangeBins * antIndx)]);
+            fftout1d);
+
+        curMax = 0;
+        curMaxIdx = 0;
+        for (rangeIdx = 0; rangeIdx < obj->numRangeBins; rangeIdx++)
+        {
+            if (curMax < fftout1d[rangeIdx])
+            {
+                curMax = fftout1d[rangeIdx];
+                curMaxIdx = rangeIdx;
+            }
+        }
+
+        obj->message[obj->chirpCount] = curMaxIdx >> 2;
     }
+    
 
     gCycleLog.interChirpProcessingTime += Cycleprofiler_getTimeStamp() - startTime - waitingTime;
     gCycleLog.interChirpWaitTime += waitingTime;
@@ -1959,7 +1975,7 @@ void MmwDemo_interFrameProcessing(MmwDemo_DSS_DataPathObj *obj, uint8_t subframe
      * the UART rate is quite low. */
     populateOutputs(obj);
 
-    strcpy(obj->message, "Hello World!");
+    // strcpy(obj->message, "Hello World!");
     
     gCycleLog.interFrameProcessingTime += Cycleprofiler_getTimeStamp() - startTime - waitingTime;
     gCycleLog.interFrameWaitTime += waitingTime;
